@@ -25,7 +25,7 @@ router.get("/getusercart", async (req, res) => {
     }
 });
 
-router.get("/getallcarts", async (req, res) => {
+router.post("/getallcarts", async (req, res) => {
     try {
         const userId = req.body.userId;
         const cart = await Cart.find({ userId });
