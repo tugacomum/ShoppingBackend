@@ -38,7 +38,7 @@ router.get("/getallcarts", async (req, res) => {
 router.patch("/addproducttocart", async (req, res) => {
     try {
         const params = req.body;
-        const cart = await Cart.findOne({ cartId: params.cartId });
+        const cart = await Cart.findOne({ _id: params.cartId });
         if (!cart) {
             return res.status(400).json({ error: "Cart not found" });
         }
