@@ -25,9 +25,9 @@ router.get("/getusercart", async (req, res) => {
     }
 });
 
-router.post("/getallcarts", async (req, res) => {
+router.post("/getallcarts/:userId", async (req, res) => {
     try {
-        const userId = req.body.userId;
+        const userId = req.params.userId;
         const cart = await Cart.find({ userId });
         res.send(cart);
     } catch (error) {
