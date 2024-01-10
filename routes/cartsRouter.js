@@ -25,6 +25,16 @@ router.get("/getusercart", async (req, res) => {
     }
 });
 
+router.get("/getallcarts", async (req, res) => {
+    try {
+        const userId = req.body.userId;
+        const cart = await Cart.find({ userId });
+        res.send(cart);
+    } catch (error) {
+        return res.status(400).json({ error });
+    }
+});
+
 router.patch("/addproducttocart", async (req, res) => {
     try {
         const params = req.body;
