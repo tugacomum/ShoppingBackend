@@ -18,6 +18,11 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  imageUrl: {
+    type: String,
+    required: false,
+    default: "https://www.metroworldnews.com.br/resizer/taN9dpaw_SV2B3K0_boH9ukMe-w=/800x0/filters:format(png):quality(70)/cloudfront-us-east-1.images.arcpublishing.com/metroworldnews/5WKQSM36ABDAFOI3CZKEDFYULI.png"
+  },
   status: {
     type: String,
     required: true,
