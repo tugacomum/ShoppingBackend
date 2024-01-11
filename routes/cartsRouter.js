@@ -9,7 +9,7 @@ router.post("/createcart", async (req, res) => {
             ...cart
         });
         await newcart.save();
-        res.send("Cart Created Successfully");
+        res.send(newcart);
     } catch (error) {
         return res.status(400).json({ error });
     }
