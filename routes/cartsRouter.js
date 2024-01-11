@@ -45,7 +45,7 @@ router.patch("/addproducttocart", async (req, res) => {
         const products = req.body.products;
         cart.products = products;
         await cart.save();
-        res.send("Product(s) added to cart");
+        res.send(cart);
     } catch (error) {
         return res.status(400).json({ error });
     }
