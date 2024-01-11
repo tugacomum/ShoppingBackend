@@ -15,7 +15,7 @@ router.post("/register", async (req, res) => {
     await newuser.save();
     res.send(newuser);
   } catch (error) {
-    return res.statusCode(400).json({ error });
+    return res.status(400).json({ error });
   }
 });
 
@@ -29,13 +29,13 @@ router.post("/login", async (req, res) => {
       if (result) {
         res.send(user);
       } else {
-        return res.statusCode(400).json({ message: "Login failed" });
+        return res.status(400).json({ message: "Login failed" });
       }
     } else {
-      return res.statusCode(400).json({ message: "Login failed" });
+      return res.status(400).json({ message: "Login failed" });
     }
   } catch (error) {
-    return res.statusCode(400).json({ error });
+    return res.status(400).json({ error });
   }
 });
 
@@ -44,7 +44,7 @@ router.get("/getallusers", async (res) => {
     const users = await User.find({});
     res.send(users);
   } catch (error) {
-    return res.statusCode(400).json({ message: error });
+    return res.status(400).json({ message: error });
   }
 });
 
@@ -54,7 +54,7 @@ router.post("/deleteuser", async (req, res) => {
     await User.deleteOne({ _id: userid });
     res.send("User deleted successfully");
   } catch (error) {
-    return res.statusCode(400).json({ message: error });
+    return res.status(400).json({ message: error });
   }
 });
 
@@ -72,7 +72,7 @@ router.post("/disableuser", async (req, res) => {
       return res.send("User disabled successfully");
     }
   } catch (error) {
-    return res.statusCode(400).json({ message: error });
+    return res.status(400).json({ message: error });
   }
 });
 
@@ -90,7 +90,7 @@ router.post("/roleuser", async (req, res) => {
       return res.send("User is now an admin user");
     }
   } catch (error) {
-    return res.statusCode(400).json({ message: error });
+    return res.status(400).json({ message: error });
   }
 });
 
@@ -100,7 +100,7 @@ router.post("/getuserbyid", async (req, res) => {
     const user = await User.findOne({ _id: userid });
     res.send(user);
   } catch (error) {
-    return res.statusCode(400).json({ message: error });
+    return res.status(400).json({ message: error });
   }
 });
 
@@ -116,7 +116,7 @@ router.post("/edituser", async (req, res) => {
     );
     res.send(result);
   } catch (error) {
-    return res.statusCode(400).json({ message: error });
+    return res.status(400).json({ message: error });
   }
 });
 
