@@ -51,4 +51,20 @@ router.patch("/addproducttocart", async (req, res) => {
     }
 });
 
+router.post("/finishbuy", async (req, res) => {
+    try {
+        const params = req.body;
+        const cart = await Cart.findOne({ _id: params.cartId });
+        if (!cart) {
+            return res.status(400).json({ error: "Cart not found" });
+        }
+        cart.isPaid = true;
+        cart.isActive = false;
+        await cart.save();
+        res.send(cart);
+    } catch (error) {
+        return res.status(400).json({ error });
+    }
+});
+
 module.exports = router;
