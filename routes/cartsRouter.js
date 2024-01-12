@@ -15,10 +15,10 @@ router.post("/createcart", async (req, res) => {
     }
 });
 
-router.get("/getusercart", async (req, res) => {
+router.post("/getusercart", async (req, res) => {
     try {
-        const userId = req.body.userId;
-        const cart = await Cart.findOne({ userId });
+        const cartId = req.body.cartId;
+        const cart = await Cart.findOne({ _id: cartId });
         res.send(cart);
     } catch (error) {
         return res.status(400).json({ error });
