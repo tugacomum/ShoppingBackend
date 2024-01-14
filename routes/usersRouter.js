@@ -111,7 +111,7 @@ router.post("/edituser", async (req, res) => {
       { _id: user.id },
       {
         name: user.name,
-        email: user.email,
+        imageUrl: user.imageUrl,
       }
     );
     res.send(result);
