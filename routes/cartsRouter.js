@@ -67,7 +67,7 @@ router.post("/finishbuy", async (req, res) => {
     }
 });
 
-router.delete("/deletecart", async (req, res) => {
+router.post("/deletecart", async (req, res) => {
     try {
         const params = req.body;
         const cart = await Cart.deleteOne({ _id: params.cartId });
