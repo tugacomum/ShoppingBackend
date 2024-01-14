@@ -70,10 +70,11 @@ router.post("/finishbuy", async (req, res) => {
 router.post("/deletecart", async (req, res) => {
     try {
         const params = req.body;
-        const cart = await Cart.deleteOne({ _id: params.cartId });
+        const cart = await Cart.deleteOne({ _id: params._id });
         if (!cart) {
             return res.status(400).json({ error: "Cart not found" });
         }
+        await cart.save();
         res.status(200).json({ message: "Cart deleted" });
     } catch (error) {
         return res.status(400).json({ error });
