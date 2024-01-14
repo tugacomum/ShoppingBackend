@@ -67,4 +67,17 @@ router.post("/finishbuy", async (req, res) => {
     }
 });
 
+router.delete("/deletecart", async (req, res) => {
+    try {
+        const params = req.body;
+        const cart = await Cart.deleteOne({ _id: params.cartId });
+        if (!cart) {
+            return res.status(400).json({ error: "Cart not found" });
+        }
+        res.status(200).json({ message: "Cart deleted" });
+    } catch (error) {
+        return res.status(400).json({ error });
+    }
+});
+
 module.exports = router;
