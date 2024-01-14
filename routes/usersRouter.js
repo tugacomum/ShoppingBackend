@@ -104,17 +104,18 @@ router.post("/getuserbyid", async (req, res) => {
   }
 });
 
-router.post("/edituser", async (req, res) => {
-  const { user } = req.body;
+router.patch("/edituser", async (req, res) => {
+  const params = req.body;
   try {
-    const result = await User.updateOne(
-      { _id: user.id },
-      {
-        name: user.name,
-        imageUrl: user.imageUrl,
-      }
-    );
-    res.send(result);
+    const user = await User.findOne({ _id: params._id });
+    if (!user) {
+      return res.status(400).json({ error: "User not found" });
+    }
+    user.name = params.name;
+    user.imageUrl = params.imageUrl;
+
+    await user.save();
+    res.send(user);
   } catch (error) {
     return res.status(400).json({ message: error });
   }
