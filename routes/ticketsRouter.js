@@ -34,6 +34,16 @@ router.get('/getusertickets', async (req, res) => {
     }
 });
 
+router.post('/getuserticket', async (req, res) => {
+    try {
+        const params = req.body;
+        const ticket = await Ticket.findOne({ cartId: params.cartId, userId: params.userId });
+        res.send(ticket);
+    } catch (error) {
+        return res.status(400).json({ error });
+    }
+});
+
 router.patch('/responseticket', async (req, res) => {
     try {
         const params = req.body;
