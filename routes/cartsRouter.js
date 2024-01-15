@@ -81,4 +81,13 @@ router.post("/deletecart", async (req, res) => {
     }
 });
 
+router.get("/getallcarts", async (req, res) => {
+    try {
+        const carts = await Cart.find({});
+        res.send(carts);
+    } catch (error) {
+        return res.status(400).json({ error });
+    }
+});
+
 module.exports = router;
