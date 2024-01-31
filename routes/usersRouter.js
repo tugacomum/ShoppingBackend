@@ -25,7 +25,9 @@ router.post("/register", async (req, res) => {
     await newuser.save();
 
     let transporter = nodemailer.createTransport({
-      service: "Gmail",
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
       auth: {
         user: "shoppingforyouuuuu@gmail.com",
         password: "hicr taep kewb pjtl"
@@ -33,8 +35,8 @@ router.post("/register", async (req, res) => {
     });
 
     let mailOptions = {
-      from: "",
-      to: user.email,
+      from: "Shopping4U <noreply@shopping4u.pt>",
+      to: req.body.email,
       subject: "Welcome to Shopping4U",
       text: "Verify your account by entering the following code: " + code,
     };
