@@ -30,7 +30,7 @@ router.post("/register", async (req, res) => {
       secure: true,
       auth: {
         user: "shoppingforyouuuuu@gmail.com",
-        password: "hicr taep kewb pjtl"
+        pass: "hicr taep kewb pjtl"
       },
     });
 
