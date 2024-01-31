@@ -1,18 +1,52 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
+const nodemailer = require("nodemailer");
 
 const bcrypt = require("bcryptjs");
 
 router.post("/register", async (req, res) => {
   const user = req.body;
+  const code = Math.floor(Math.random() * (999_999 - 100_000 + 1)) + 100_000;
   try {
+    const emailExists = await User.findOne({ email: user.email });
+
+    if (emailExists) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
     const newuser = new User({
       name: user.name,
       email: user.email,
+      verificationCode: code,
       password: bcrypt.hashSync(user.password, 10),
     });
+
     await newuser.save();
+
+    let transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: "shoppingforyouuuuu@gmail.com",
+        password: "hicr taep kewb pjtl"
+      },
+    });
+
+    let mailOptions = {
+      from: "",
+      to: user.email,
+      subject: "Welcome to Shopping4U",
+      text: "Verify your account by entering the following code: " + code,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
     res.send(newuser);
   } catch (error) {
     return res.status(400).json({ error });
@@ -116,6 +150,14 @@ router.patch("/edituser", async (req, res) => {
 
     await user.save();
     res.send(user);
+  } catch (error) {
+    return res.status(400).json({ message: error });
+  }
+});
+
+router.post("/verifyuser", async (req, res) => {
+  try {
+
   } catch (error) {
     return res.status(400).json({ message: error });
   }

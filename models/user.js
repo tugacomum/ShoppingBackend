@@ -18,6 +18,14 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  verificationCode: {
+    type: String,
+    required: false,
+  },
   imageUrl: {
     type: String,
     required: false,
