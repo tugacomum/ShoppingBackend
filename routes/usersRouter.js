@@ -55,6 +55,23 @@ router.post("/register", async (req, res) => {
   }
 });
 
+router.post('/verify', async (req, res) => {
+  try {
+    const params = req.body;
+    const user = await User.findOne({ email: params.email });
+    if (user.verificationCode === params.code) {
+      user.isVerified = true;
+      user.verificationCode = null;
+      await user.save();
+      res.send(user);
+    } else {
+      return res.status(400).json({ message: "Wrong code" });
+    }
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+});
+
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
