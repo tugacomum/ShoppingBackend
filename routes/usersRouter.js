@@ -80,7 +80,12 @@ router.post("/login", async (req, res) => {
     if (user) {
       const result = await bcrypt.compare(password, user.password);
       if (result) {
-        res.send(user);
+        const isVerified = user.isVerified;
+        if (isVerified) {
+          res.send(user);
+        } else {
+          return res.status(400).json({ message: "Account not verified" });
+        }
       } else {
         return res.status(400).json({ message: "Login failed" });
       }
