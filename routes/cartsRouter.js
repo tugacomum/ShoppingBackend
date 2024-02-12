@@ -90,4 +90,14 @@ router.get("/getallcarts", async (req, res) => {
     }
 });
 
+router.post('/getproductsbycartid', async (req, res) => {
+    try {
+        const _id = req.body.cartId;
+        const cart = await Cart.findOne({ _id });
+        res.send(cart.products);
+    } catch (error) {
+        return res.status(400).json({ error });
+    }
+});
+
 module.exports = router;

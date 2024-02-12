@@ -5,6 +5,10 @@ const ticketSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  productId: {
+    type: String,
+    required: true
+  }, 
   userId: {
     type: String,
     required: true
