@@ -169,8 +169,9 @@ router.patch("/edituser", async (req, res) => {
     if (!user) {
       return res.status(400).json({ error: "User not found" });
     }
-    user.name = params.name;
-    user.imageUrl = params.imageUrl;
+    user = {
+      ...params
+    }
 
     await user.save();
     res.send(user);
