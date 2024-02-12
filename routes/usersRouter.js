@@ -25,12 +25,12 @@ router.post("/register", async (req, res) => {
     await newuser.save();
 
     let transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
+      host: "smtp.gmail.com",
       port: 465,
       secure: true,
       auth: {
         user: "shoppingforyouuuuu@gmail.com",
-        pass: "hicr taep kewb pjtl"
+        pass: "hicr taep kewb pjtl",
       },
     });
 
@@ -45,7 +45,7 @@ router.post("/register", async (req, res) => {
       if (error) {
         console.log(error);
       } else {
-        console.log('Email sent: ' + info.response);
+        console.log("Email sent: " + info.response);
       }
     });
 
@@ -55,7 +55,45 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.post('/verify', async (req, res) => {
+router.post("/resendcode", async (req, res) => {
+  try {
+    const email = req.body.email;
+    const user = await User.find({ email });
+    if (!user) {
+      return res.status(400).json({ message: 'User not found.' });
+    }
+    let transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: "shoppingforyouuuuu@gmail.com",
+        pass: "hicr taep kewb pjtl",
+      },
+    });
+
+    let mailOptions = {
+      from: "Shopping4U <noreply@shopping4u.pt>",
+      to: email,
+      subject: "Welcome to Shopping4U",
+      text: "Verify your account by entering the following code: " + user[0].verificationCode.toString(),
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
+    res.status(200).json({ message: 'Email sent!' });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+});
+
+router.post("/verify", async (req, res) => {
   try {
     const params = req.body;
     const user = await User.findOne({ email: params.email });
@@ -166,10 +204,13 @@ router.patch("/edituser", async (req, res) => {
   const params = req.body;
   try {
     const updatedFields = {
-      ...params
-    }
-    
-    const user = await User.findOneAndUpdate({ _id: params._id }, updatedFields);
+      ...params,
+    };
+
+    const user = await User.findOneAndUpdate(
+      { _id: params._id },
+      updatedFields
+    );
 
     if (!user) {
       return res.status(400).json({ error: "User not found" });
@@ -184,7 +225,6 @@ router.patch("/edituser", async (req, res) => {
 
 router.post("/verifyuser", async (req, res) => {
   try {
-
   } catch (error) {
     return res.status(400).json({ message: error });
   }
