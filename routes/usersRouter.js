@@ -168,8 +168,9 @@ router.patch("/edituser", async (req, res) => {
     const updatedFields = {
       ...params
     }
-    const user = await User.findOneAndUpdate({ _id: params._id }, updatedFields);
     
+    const user = await User.findOneAndUpdate({ _id: params._id }, updatedFields);
+
     if (!user) {
       return res.status(400).json({ error: "User not found" });
     }
