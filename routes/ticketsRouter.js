@@ -34,9 +34,9 @@ router.post('/hasticket', async (req, res) => {
     }
 });
 
-router.post('/getusertickets', async (req, res) => {
+router.Get('/getusertickets/:userId', async (req, res) => {
     try {
-        const userId = req.body.userId;
+        const userId = req.params.userId;
         const tickets = await Ticket.find({ userId });
         res.send(tickets);
     } catch (error) {
