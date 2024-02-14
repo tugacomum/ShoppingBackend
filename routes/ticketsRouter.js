@@ -29,9 +29,9 @@ router.post('/hasticket', async (req, res) => {
         const params = req.body;
         const ticket = await Ticket.find({ userId: params.userId, productId: params.productId, cartId: params.cartId });
         if (ticket.length > 0) {
-            res.send(true);
+            res.status(200).json(true);
         } else {
-            res.send(false);
+            res.status(400).json(false);
         }
     } catch (error) {
         return res.status(400).json({ error });
