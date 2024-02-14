@@ -27,12 +27,8 @@ router.get('/getalltickets', async (req, res) => {
 router.post('/hasticket', async (req, res) => {
     try {
         const params = req.body;
-        const ticket = await Ticket.find({ userId: params.userId, productId: params.productId, cartId: params.cartId });
-        if (ticket.length > 0) {
-            res.status(200).json(true);
-        } else {
-            res.status(400).json(false);
-        }
+        const ticket = await Ticket.findOne({ userId: params.userId, productId: params.productId, cartId: params.cartId });
+        res.json({ exists: !!ticket });
     } catch (error) {
         return res.status(400).json({ error });
     }
