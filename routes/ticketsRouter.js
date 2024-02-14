@@ -34,7 +34,7 @@ router.post('/hasticket', async (req, res) => {
     }
 });
 
-router.Get('/getusertickets/:userId', async (req, res) => {
+router.get('/getusertickets/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
         const tickets = await Ticket.find({ userId });
